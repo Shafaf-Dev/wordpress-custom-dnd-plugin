@@ -126,19 +126,34 @@ class App extends Component {
         break;
     }
   }
-  settingFieldValues = () =>{
-    console.log('hello');
+
+  settingFieldValues = (name) =>{
+    let hello = name['state-id'].map((values)=> {
+      let inputValue = document.getElementById(values.name).value;
+
+      const newValue = { 'value' : inputValue, };
+      const fieldValue = {
+            ...values,
+            ...newValue
+          };
+      return(fieldValue)
+    });
+    return hello;
   }
 
   saveStateData = (e) => {
-    var self = this;
     e.preventDefault();
     const stateValue = this.state
-    console.log(stateValue)
-    this.settingFieldValues();
+    console.log(stateValue);
+    var hai = this.settingFieldValues(stateValue);
+    const sample = {
+      'state-id' : {...hai}
+    }
+    console.log(sample);
+    // onsole.log('final');
     const sampleData = {
       action  : 'dnd_template',
-      savedData : stateValue,
+      savedData : sample,
     }
 
     jQuery.ajax({

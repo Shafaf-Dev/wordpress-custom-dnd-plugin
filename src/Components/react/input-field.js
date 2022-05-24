@@ -60,7 +60,7 @@ const Input = (props) => {
 
 	return(
 		<>
-			{field_type_select == 'select' ? '': <Inputs type={field_type} name={props.name} placeholder={placeholder} className={field_style} />}
+			{field_type_select == 'select' ? '': <Inputs type={field_type} id={props.name} name={props.name} placeholder={placeholder} defaultValue={props.item.value} className={field_style} />}
 			{field_type_select == 'select' ? <Select item={props.item} sty={field_style}/> : ''}
 		</>
 		)

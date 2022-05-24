@@ -15123,8 +15123,10 @@ var Input = function Input(props) {
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, field_type_select == 'select' ? '' : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(Inputs, {
     type: field_type,
+    id: props.name,
     name: props.name,
     placeholder: placeholder,
+    defaultValue: props.item.value,
     className: field_style
   }), field_type_select == 'select' ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(Select, {
     item: props.item,
@@ -15314,22 +15316,35 @@ var App = /*#__PURE__*/function (_Component) {
       }
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_10___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "settingFieldValues", function () {
-      console.log('hello');
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_10___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "settingFieldValues", function (name) {
+      var hello = name['state-id'].map(function (values) {
+        var inputValue = document.getElementById(values.name).value;
+        var newValue = {
+          'value': inputValue
+        };
+
+        var fieldValue = _objectSpread(_objectSpread({}, values), newValue);
+
+        return fieldValue;
+      });
+      return hello;
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_10___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "saveStateData", function (e) {
-      var self = _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this);
-
       e.preventDefault();
       var stateValue = _this.state;
       console.log(stateValue);
 
-      _this.settingFieldValues();
+      var hai = _this.settingFieldValues(stateValue);
+
+      var sample = {
+        'state-id': _objectSpread({}, hai)
+      };
+      console.log(sample); // onsole.log('final');
 
       var sampleData = {
         action: 'dnd_template',
-        savedData: stateValue
+        savedData: sample
       };
       jQuery.ajax({
         type: 'POST',
