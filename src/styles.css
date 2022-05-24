@@ -1,0 +1,43 @@
+.color_field_styles{
+	width: 41px !important;
+	padding: 2px !important;
+	height: 2rem;
+	margin-left: 6rem;
+}
+.date_field_style{
+	width: 9rem !important;
+    margin-top: 2rem;
+}
+.radio_field_style{
+	margin-left: 14px !important;
+}
+.submit-button{
+	display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #0000;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-left: 2rem;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.delete-button{
+	float: right;
+	cursor: auto;
+    color: #5a0707;
+}
+.select-field{
+    margin-left: 20px;
+    width: 15rem;
+}
