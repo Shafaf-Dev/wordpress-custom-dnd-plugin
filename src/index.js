@@ -3,21 +3,21 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import Content from './Components/react/content';
-import ITEMS from './Components/js/item'
+import ITEMS from './Components/js/item';
+import Default_object from './Components/js/dnd-default-settings';
+
 
 
 const dropIt = (source, destination, droppableSource, droppableDestination) => {
-    
+  const sourceClone = Array.from(source);
 
-    const sourceClone = Array.from(source);
+  const destClone = Array.from(destination);
+  const item = sourceClone[droppableSource.index];
 
-    const destClone = Array.from(destination);
-    const item = sourceClone[droppableSource.index];
+  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() });
 
-    destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() });
-
-    // console.log('==> dropIt', destClone);
-    return destClone;
+  // console.log('==> dropIt', destClone);
+  return destClone;
 };
 
 const reorder = (list, startIndex, endIndex) => {
@@ -28,38 +28,8 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
-// jQuery(document).ready(function($){
-//   // $('.builder-container').ready(() => {
-//   //   $('.form-field-item').mouseenter(()=>{
-//   //     console.log($(this).children());
-//   //   })
-//   // })
-
-//   $(".form-field-item").mouseover(function(){
-//     // console.log('over')
-//     var overField = $(this).data('rbd-draggable-id');
-//     var hello = $(".form-field-item").children('span')
-//     var koi = hello.is('#'+overField)
-//     // console.log(koi)
-//     if(koi){
-//       $("#"+overField).css('display','block')
-//     }
-//   });
-//   $(".form-field-item").mouseout(function(){
-//     // console.log('out')
-//     var overField = $(this).data('rbd-draggable-id');
-//     var hello = $(".form-field-item").children('span')
-//     var koi = hello.is('#'+overField)
-//     // console.log(koi)
-//     if(koi){
-//       $("#"+overField).css('display','none')
-//     }
-//   });
-
-// });
-
 const List = styled.div`
-    border: 1px ${props => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
+    border: 1px ${props => (props.isDraggingOver ? 'solid #000' : 'solid #ddd')};
     background: #fff;
     padding: 0.5rem 0.5rem 0;
     border-radius: 3px;
@@ -91,11 +61,34 @@ const Item = styled.div`
 
 
 
-const user_data= dnd_admin_var.settings[0]
-class App extends Component {
+const user_data = dnd_admin_var.settings // old values
+// console.log('user_data');
+// console.log(user_data);
 
+var saved_object = '';
+
+if(user_data.length > 0){
+  
+  console.log('if is working..');
+  saved_object = user_data[0]
+}else{
+   console.log('else is working..');
+  saved_object = {
+    ['state-id'] : [...Default_object]
+  }
+}
+
+
+// console.log('saved_object');
+// console.log(saved_object);
+
+class App extends Component {
   state = {
-        ['state-id']: [...user_data['state-id']]
+        ['state-id']: [...saved_object['state-id']]
+    };
+
+  addList = e => {
+        this.setState({ [uuid()]: [] });
     };
 
   onDragEnd = result => {
@@ -143,17 +136,11 @@ class App extends Component {
 
   saveStateData = (e) => {
     e.preventDefault();
-    const stateValue = this.state
+    let stateValue = this.state
     console.log(stateValue);
-    var hai = this.settingFieldValues(stateValue);
-    const sample = {
-      'state-id' : {...hai}
-    }
-    console.log(sample);
-    // onsole.log('final');
-    const sampleData = {
+    let sampleData = {
       action  : 'dnd_template',
-      savedData : sample,
+      savedData : stateValue,
     }
 
     jQuery.ajax({
@@ -163,7 +150,6 @@ class App extends Component {
       success : alert('Saved'),
     });
   }
-
 
   deleteField = object => {
     const selected_obj = object.name;
@@ -218,7 +204,6 @@ class App extends Component {
             </SideSection>
           )}
         </Droppable>
-
         <Content  
           state={this.state}  
           saveStateData={this.saveStateData}

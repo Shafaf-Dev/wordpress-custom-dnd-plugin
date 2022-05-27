@@ -62,7 +62,7 @@ const Content = (props) => {
 				                                  {...provided.dragHandleProps}
 				                                >
 				                                  	<ItemField>
-				                                      {item.content}
+				                                      {item.title}
 			                                    	</ItemField>
 			                                    	<span id={item.id} onClick={() => props.deleteField(item)} className="dashicons dashicons-trash delete-button"></span>
 				                                      <Input
